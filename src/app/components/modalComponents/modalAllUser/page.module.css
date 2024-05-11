@@ -1,0 +1,29 @@
+.containerMain {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #828282;
+  position: absolute;
+  top: 55px;
+  right: 200px;
+  height: 30px;
+  width: 100px;
+  z-index: 1;
+  border-radius: 5px;
+  background-color: #0d0d0d;
+  border: 1px solid #3b3c3e;
+}
+
+.details {
+  position: absolute;
+  top: -7px;
+  right: 22px;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #3b3c3e;
+  transform: rotate(45deg);
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  background-color: #0d0d0d;
+}

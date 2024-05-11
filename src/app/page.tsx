@@ -2,14 +2,46 @@
 import styles from "./page.module.css";
 import { useStoreCommuns } from "./utils/store";
 
+import ModalAllUser from "./components/modalComponents/modalAllUser/page";
+import ModalTo from "./components/modalComponents/modalTo/page";
+import ModalViewUtils from "./components/modalComponents/modalViewUtils/page";
+
 export default function Home() {
-  const { utilsSelected, toggleUtilsSelected } = useStoreCommuns();
+  const {
+    utilsSelected,
+    toggleUtilsSelected,
+    perfilSelected,
+    togglePerfilSelected,
+  } = useStoreCommuns();
+  
   return (
     <div className={styles.containerMain}>
+      {/* <ModalAllUser /> */}
+      {/* <ModalTo/> */}
+      <ModalViewUtils/>
       <main className={styles.main}>
         <div className={styles.topArea}>
           <div className={styles.perfilArea}>
-            <div className={styles.circle} />
+            <div
+              className={styles.circle}
+              style={{
+                color: "#1A5FD5",
+                backgroundColor: !perfilSelected ? "#1b262d" : "black",
+              }}
+              onMouseEnter={() => togglePerfilSelected(true)}
+              onMouseLeave={() => togglePerfilSelected(false)}
+            >
+              {!perfilSelected ? (
+                "D"
+              ) : (
+                <span
+                  className="material-symbols-outlined"
+                  style={{ color: "#1A5FD5" }}
+                >
+                  edit
+                </span>
+              )}
+            </div>
             <span
               className="material-symbols-outlined"
               style={{ color: "#747C84", cursor: "pointer" }}
@@ -63,7 +95,7 @@ export default function Home() {
             </div>
             <span
               className="material-symbols-outlined"
-              style={{ color: "#828282" }}
+              style={{ color: "#828282", cursor: "pointer" }}
             >
               group
             </span>
