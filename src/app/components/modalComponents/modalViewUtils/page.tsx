@@ -1,9 +1,33 @@
 "use client";
 import styles from "./page.module.css";
+import { useEffect, useRef } from "react";
+import { useStoreModal } from "@/app/utils/store";
+
 
 export default function ModalViewUtils() {
+  const refPersonInside = useRef(null);
+  const { toggleModalViewUtils } = useStoreModal();
+
+  
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (
+        refPersonInside.current &&
+        !refPersonInside.current.contains(event.target)
+      ) {
+        toggleModalViewUtils(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={styles.containerMain}>
+    <div className={styles.containerMain} ref={refPersonInside}>
       <div className={styles.details} />
       <div className={styles.containerText}>
         <div className={styles.text}>

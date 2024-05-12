@@ -1,6 +1,6 @@
 "use client";
 import styles from "./page.module.css";
-import { useStoreCommuns } from "./utils/store";
+import { useStoreCommuns, useStoreModal } from "./utils/store";
 
 import ModalAllUser from "./components/modalComponents/modalAllUser/page";
 import ModalTo from "./components/modalComponents/modalTo/page";
@@ -13,12 +13,19 @@ export default function Home() {
     perfilSelected,
     togglePerfilSelected,
   } = useStoreCommuns();
-  
+
+  const {
+    viewModalAllUser,
+    viewModalViewUtils,
+    toggleModalViewUtils,
+    toggleModalAllUser
+  } = useStoreModal();
+
   return (
     <div className={styles.containerMain}>
-      {/* <ModalAllUser /> */}
-      {/* <ModalTo/> */}
-      <ModalViewUtils/>
+      {viewModalAllUser ? <ModalAllUser /> : ""}
+      {viewModalViewUtils ? <ModalViewUtils /> : ""}
+      {utilsSelected ? <ModalTo /> : ""}
       <main className={styles.main}>
         <div className={styles.topArea}>
           <div className={styles.perfilArea}>
@@ -45,6 +52,7 @@ export default function Home() {
             <span
               className="material-symbols-outlined"
               style={{ color: "#747C84", cursor: "pointer" }}
+              onClick={() => toggleModalViewUtils(true)}
             >
               expand_more
             </span>
@@ -87,6 +95,7 @@ export default function Home() {
                 <span
                   className="material-symbols-outlined"
                   style={{ fontSize: "15px" }}
+                  
                 >
                   person
                 </span>
@@ -96,6 +105,7 @@ export default function Home() {
             <span
               className="material-symbols-outlined"
               style={{ color: "#828282", cursor: "pointer" }}
+              onClick={() => toggleModalAllUser(true)}
             >
               group
             </span>
