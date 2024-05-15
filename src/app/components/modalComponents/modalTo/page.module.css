@@ -3,23 +3,23 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #828282;
+  color: var(--text-color);
   position: absolute;
   top: 60px;
   right: 200px;
   height: 70px;
   width: 220px;
   z-index: 1;
-  border-radius: 5px;
-  background-color: #0d0d0d;
-  border: 1px solid #3b3c3e;
+  border-radius: var(--border-radius);
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--border-color);
 }
 
 .containerMain h3 {
-  font-size: 11px;
+  font-size: var(--font-size-small);
   margin-left: 20px;
   margin-bottom: 5px;
-  color: white;
+  color: var(--text-white);
 }
 
 .details {
@@ -28,11 +28,11 @@
   right: 87px;
   width: 10px;
   height: 10px;
-  border: 1px solid #3b3c3e;
+  border: 1px solid var(--border-color);
   transform: rotate(45deg);
   border-bottom-color: transparent;
   border-right-color: transparent;
-  background-color: #0d0d0d;
+  background-color: var(--main-bg-color);
 }
 
 .containerInput {
@@ -42,12 +42,12 @@
   width: 80%;
   height: 50%;
   margin-left: 20px;
-  border-radius: 5px;
-  border: 1px solid #3b3c3e;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
 }
 
 .containerInput:focus {
-  border: 1px solid #355061;
+  border: 1px solid var(--highlight-border-color);
 }
 
 .containerInput input {
@@ -55,13 +55,14 @@
   height: 100%;
   border-radius: 3px;
   padding-left: 10px;
-  background-color: #0d0d0d;
-  color: white;
+  font-size: var(--font-size-medium);
+  background-color: var(--main-bg-color);
+  color: var(--text-white);
   border: none;
 }
 
 .containerInput input::placeholder {
-  font-size: 11px;
+  font-size: var(--placeholder-font-size);
 }
 
 .containerInput input:focus {
@@ -78,10 +79,11 @@
   cursor: pointer;
   transition: transform 0.2s;
 }
+
 .containerInput .containerIcon:hover {
-  background-color: rgb(22, 22, 22);
+  background-color: var(--icon-bg-hover);
 }
 
 .containerInput .containerIcon:active {
-  transform: translateY(-1px);
+  transform: translateY(var(--translate-active));
 }

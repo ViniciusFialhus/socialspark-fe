@@ -1,14 +1,42 @@
 "use client";
 import styles from "./page.module.css";
+import '../../../globals.css';
+import { io } from "socket.io-client";
 import { useEffect, useRef } from "react";
-import { useStoreModal } from "@/app/utils/store";
-
+import { useStoreModal, useChatStore } from "@/app/utils/store";
 
 export default function ModalViewUtils() {
   const refPersonInside = useRef(null);
   const { toggleModalViewUtils } = useStoreModal();
+  const { socket, setSocket, serverStatus, setServerStatus } = useChatStore();
 
-  
+  const toggleConnection = () => {
+    if (socket && serverStatus === "connected") {
+      socket.disconnect();
+      console.log("Disconnecting from server.");
+    }
+    else if (!socket || serverStatus === "disconnected") {
+      const newSocket = io("http://localhost:3000", {
+        withCredentials: true,
+        reconnection: false,
+      });
+
+      newSocket.on("connect", () => {
+        setServerStatus("connected");
+        console.log("Connected to server.");
+      });
+
+      newSocket.on("disconnect", () => {
+        setServerStatus("disconnected");
+        console.log("Disconnected from server.");
+      });
+
+      setSocket(newSocket);
+    } else {
+      console.log(`Current server status: ${serverStatus}`);
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (
@@ -31,17 +59,23 @@ export default function ModalViewUtils() {
       <div className={styles.details} />
       <div className={styles.containerText}>
         <div className={styles.text}>
-          <h5>SocketID</h5>
+          <h5>Socket Status</h5>
           <span
             className="material-symbols-outlined"
-            style={{ color: "white", fontSize: "17px", cursor: 'pointer' }}
+            style={{ color: "white", fontSize: "17px", cursor: "pointer" }}
+            onClick={toggleConnection}
           >
-            wifi
+            {!socket || serverStatus === "disconnected" ? " wifi_off" : "wifi"}
           </span>
         </div>
         <div className={styles.text}>
           <h5>Actions</h5>
-          <span className="material-symbols-outlined"  style={{ color: "white", fontSize: "17px", cursor: 'pointer' }}>flash_on</span>
+          <span
+            className="material-symbols-outlined"
+            style={{ color: "white", fontSize: "17px", cursor: "pointer" }}
+          >
+            content_copy
+          </span>
         </div>
       </div>
     </div>

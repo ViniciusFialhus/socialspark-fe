@@ -1,11 +1,16 @@
 "use client";
 import styles from "./page.module.css";
+import '../../../globals.css';
 import { useEffect, useRef } from "react";
-import { useStoreCommuns } from "@/app/utils/store";
+import { useStoreCommuns, useChatStore } from "@/app/utils/store";
 
 export default function ModalTo() {
   const refPersonInside = useRef(null);
- const {toggleUtilsSelected} = useStoreCommuns()
+  const { toggleUtilsSelected } = useStoreCommuns();
+  const { userInfo } = useChatStore();
+
+  console.log(userInfo);
+  
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -25,11 +30,11 @@ export default function ModalTo() {
   }, []);
 
   return (
-    <div className={styles.containerMain} ref={refPersonInside }>
+    <div className={styles.containerMain} ref={refPersonInside}>
       <div className={styles.details} />
       <h3>Socket id</h3>
       <div className={styles.containerInput} tabindex="0">
-        <input placeholder="Target Socket id" />
+        <input placeholder="Target Socket id" value={userInfo.clientId}/>
         <div className={styles.containerIcon}>
           {" "}
           <span

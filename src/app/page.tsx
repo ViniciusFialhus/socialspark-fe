@@ -1,10 +1,15 @@
 "use client";
 import styles from "./page.module.css";
-import { useStoreCommuns, useStoreModal } from "./utils/store";
+import './globals.css';
+import io from "socket.io-client";
+import { useEffect } from "react";
+import { useStoreCommuns, useStoreModal, useChatStore } from "./utils/store";
 
 import ModalAllUser from "./components/modalComponents/modalAllUser/page";
 import ModalTo from "./components/modalComponents/modalTo/page";
 import ModalViewUtils from "./components/modalComponents/modalViewUtils/page";
+import TextArea from "./components/textArea/page";
+import ModalNewName from "./components/modalComponents/modalNewName/page";
 
 export default function Home() {
   const {
@@ -17,17 +22,78 @@ export default function Home() {
   const {
     viewModalAllUser,
     viewModalViewUtils,
+    viewmModalNewName,
     toggleModalViewUtils,
-    toggleModalAllUser
+    toggleModalAllUser,
+    toggleModalNewName,
   } = useStoreModal();
+
+  const {
+    socket,
+    setSocket,
+    message,
+    messages,
+    serverStatus,
+    userInfo,
+    setMessage,
+    setMessages,
+    setUserInfo,
+    setAllUsers,
+    setServerStatus,
+  } = useChatStore();
+
+  useEffect(() => {
+    const clientId = localStorage.getItem("clientID");
+    const letterName = localStorage.getItem("letterName");
+    const socket = io("http://localhost:3000", {
+      withCredentials: true,
+      reconnection: false,
+      query: { clientId, letterName },
+    });
+
+    socket.on("connect", () => {
+      setServerStatus("connected");
+    });
+
+    socket.on("userInfo", (info) => {
+      setUserInfo(info);
+    });
+
+    socket.on("allMessages", (messages) => {
+      setMessages(messages);
+    });
+
+    socket.on("allUsers", (users) => {
+      setAllUsers([...users]);
+    });
+
+    socket.on("disconnect", () => {
+      localStorage.clear()
+      setServerStatus("disconnected");
+    });
+
+    setSocket(socket);
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  const sendMessage = () => {
+    if (socket && message.trim()) {
+      socket.emit("message", message);
+      setMessage("");
+    }
+  };
 
   return (
     <div className={styles.containerMain}>
-      {viewModalAllUser ? <ModalAllUser /> : ""}
-      {viewModalViewUtils ? <ModalViewUtils /> : ""}
-      {utilsSelected ? <ModalTo /> : ""}
+      {viewModalAllUser && <ModalAllUser />}
+      {viewModalViewUtils && <ModalViewUtils />}
+      {viewmModalNewName && <ModalNewName />}
+      {utilsSelected && <ModalTo />}
       <main className={styles.main}>
-        <div className={styles.topArea}>
+        <header className={styles.topArea}>
           <div className={styles.perfilArea}>
             <div
               className={styles.circle}
@@ -37,9 +103,14 @@ export default function Home() {
               }}
               onMouseEnter={() => togglePerfilSelected(true)}
               onMouseLeave={() => togglePerfilSelected(false)}
+              onClick={() => toggleModalNewName(true)}
             >
               {!perfilSelected ? (
-                "D"
+                !userInfo.letterName ? (
+                  userInfo.clientId.charAt(0).toUpperCase()
+                ) : (
+                  userInfo.letterName.toUpperCase()
+                )
               ) : (
                 <span
                   className="material-symbols-outlined"
@@ -48,6 +119,12 @@ export default function Home() {
                   edit
                 </span>
               )}
+              <div
+                className={styles.miniCircle}
+                style={{
+                  backgroundColor: serverStatus === "connected" ? "green" : "red",
+                }}
+              />
             </div>
             <span
               className="material-symbols-outlined"
@@ -57,7 +134,7 @@ export default function Home() {
               expand_more
             </span>
           </div>
-          <div className={styles.utilsArea}>
+          <nav className={styles.utilsArea}>
             <div className={styles.containerSelector}>
               <div
                 className={styles.detailsSelector}
@@ -95,7 +172,6 @@ export default function Home() {
                 <span
                   className="material-symbols-outlined"
                   style={{ fontSize: "15px" }}
-                  
                 >
                   person
                 </span>
@@ -109,17 +185,25 @@ export default function Home() {
             >
               group
             </span>
-          </div>
-        </div>
-        <div className={styles.bottomArea}>
-          <textarea placeholder="Type somethig..." />
+          </nav>
+        </header>
+        <section>
+          {messages && <TextArea />}
+        </section>
+        <footer className={styles.bottomArea}>
+          <textarea
+            placeholder="Type something..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
           <span
             className="material-symbols-outlined"
-            style={{ color: "white", fontSize: " 50px", cursor: "pointer" }}
+            style={{ color: "white", fontSize: "50px", cursor: "pointer" }}
+            onClick={sendMessage}
           >
             send
           </span>
-        </div>
+        </footer>
       </main>
     </div>
   );
