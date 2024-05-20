@@ -43,8 +43,8 @@ export default function Home() {
   } = useChatStore();
 
   useEffect(() => {
-    const clientId = localStorage.getItem("clientID");
-    const letterName = localStorage.getItem("letterName");
+    const clientId = typeof window !== "undefined" ? localStorage.getItem("clientID") : null;
+    const letterName = typeof window !== "undefined" ? localStorage.getItem("letterName") : null;
     const socket = io("http://localhost:3000", {
       withCredentials: true,
       reconnection: false,
@@ -68,7 +68,9 @@ export default function Home() {
     });
 
     socket.on("disconnect", () => {
-      localStorage.clear()
+      if (typeof window !== "undefined") {
+        localStorage.clear();
+      }
       setServerStatus("disconnected");
     });
 
