@@ -22,9 +22,6 @@ export default function ModalNewName() {
       }
     }
   };
-
-  console.log(userInfo);
-  
         
   return (
     <div className={styles.containerMain}>

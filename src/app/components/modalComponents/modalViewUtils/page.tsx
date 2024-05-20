@@ -1,12 +1,12 @@
 "use client";
 import styles from "./page.module.css";
-import '../../../globals.css';
+import "../../../globals.css";
 import { io } from "socket.io-client";
 import { useEffect, useRef } from "react";
 import { useStoreModal, useChatStore } from "@/app/utils/store";
 
 export default function ModalViewUtils() {
-  const refPersonInside = useRef(null);
+  const refPersonInside = useRef<HTMLDivElement | null>(null);
   const { toggleModalViewUtils } = useStoreModal();
   const { socket, setSocket, serverStatus, setServerStatus } = useChatStore();
 
@@ -14,8 +14,7 @@ export default function ModalViewUtils() {
     if (socket && serverStatus === "connected") {
       socket.disconnect();
       console.log("Disconnecting from server.");
-    }
-    else if (!socket || serverStatus === "disconnected") {
+    } else if (!socket || serverStatus === "disconnected") {
       const newSocket = io("http://localhost:3000", {
         withCredentials: true,
         reconnection: false,

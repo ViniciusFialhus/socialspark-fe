@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { useStoreModal, useChatStore } from "@/app/utils/store";
 
 export default function ModalAllUser() {
-  const refPersonInside = useRef(null);
+  const refPersonInside = useRef<HTMLDivElement | null>(null);
   const { toggleModalAllUser } = useStoreModal();
   const { allUsers } = useChatStore();
 

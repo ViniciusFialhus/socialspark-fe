@@ -5,7 +5,7 @@ import { useChatStore } from "@/app/utils/store";
 
 export default function TextArea() {
   const { messages, userInfo } = useChatStore();
-  function formatarHora(dataISO: string): string {
+  function formatedDate(dataISO: string): string {
     const date = new Date(dataISO); 
     let horas = date.getUTCHours().toString().padStart(2, "0");
     let minutos = date.getUTCMinutes().toString().padStart(2, "0");
@@ -24,7 +24,7 @@ export default function TextArea() {
                   : `${styles.otherMessages}`
               }
             >
-              <h6>{formatarHora(msg.date.toString())}</h6>
+              <h6>{formatedDate(msg.date.toString())}</h6>
               <h1>{msg.message}</h1>
               <div
                 className={styles.circle}
