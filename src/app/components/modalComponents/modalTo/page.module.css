@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: var(--text-color);
+  color: var(--color-white);
   position: absolute;
   top: 60px;
   right: 200px;
@@ -11,15 +11,15 @@
   width: 220px;
   z-index: 1;
   border-radius: var(--border-radius);
-  background-color: var(--main-bg-color);
-  border: 1px solid var(--border-color);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
 }
 
 .containerMain h3 {
   font-size: var(--font-size-small);
   margin-left: 20px;
   margin-bottom: 5px;
-  color: var(--text-white);
+  color: var(--color-white);
 }
 
 .details {
@@ -28,11 +28,11 @@
   right: 87px;
   width: 10px;
   height: 10px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
   transform: rotate(45deg);
   border-bottom-color: transparent;
   border-right-color: transparent;
-  background-color: var(--main-bg-color);
+  background-color: var(--color-bg);
 }
 
 .containerInput {
@@ -43,11 +43,11 @@
   height: 50%;
   margin-left: 20px;
   border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
 }
 
 .containerInput:focus {
-  border: 1px solid var(--highlight-border-color);
+  border: 1px solid var(--color-accent);
 }
 
 .containerInput input {
@@ -56,9 +56,10 @@
   border-radius: 3px;
   padding-left: 10px;
   font-size: var(--font-size-medium);
-  background-color: var(--main-bg-color);
-  color: var(--text-white);
+  background-color: var(--color-bg);
+  color: var(--color-white);
   border: none;
+  pointer-events: none;
 }
 
 .containerInput input::placeholder {
@@ -68,6 +69,7 @@
 .containerInput input:focus {
   outline: none;
   border: none;
+  border: 1px solid var(--color-accent);
 }
 
 .containerInput .containerIcon {
@@ -80,10 +82,6 @@
   transition: transform 0.2s;
 }
 
-.containerInput .containerIcon:hover {
-  background-color: var(--icon-bg-hover);
-}
-
 .containerInput .containerIcon:active {
-  transform: translateY(var(--translate-active));
+  transform: translateY(-2px);
 }
