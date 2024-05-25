@@ -45,7 +45,7 @@ export default function Home() {
   useEffect(() => {
     const clientId = typeof window !== "undefined" ? localStorage.getItem("clientID") : null;
     const letterName = typeof window !== "undefined" ? localStorage.getItem("letterName") : null;
-    const socket = io("curved-lemur-social12313-7f7b4f8b.koyeb.app", {
+    const socket = io("https://socialspark-be-production.up.railway.app", {
       withCredentials: true,
       reconnection: false,
       query: { clientId, letterName },
