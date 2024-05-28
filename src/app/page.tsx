@@ -45,7 +45,7 @@ export default function Home() {
   useEffect(() => {
     const clientId = typeof window !== "undefined" ? localStorage.getItem("clientID") : null;
     const letterName = typeof window !== "undefined" ? localStorage.getItem("letterName") : null;
-    const socket = io("https://socialspark-be-production.up.railway.app", {
+    const socket = io("http://localhost:3000", {
       withCredentials: true,
       reconnection: false,
       query: { clientId, letterName },
@@ -65,6 +65,8 @@ export default function Home() {
 
     socket.on("allUsers", (users) => {
       setAllUsers([...users]);
+      console.log(users);
+      
     });
 
     socket.on("disconnect", () => {

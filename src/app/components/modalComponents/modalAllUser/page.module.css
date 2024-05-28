@@ -1,4 +1,3 @@
-/* page.module.css */
 .containerMain {
   display: flex;
   flex-direction: column;
@@ -27,18 +26,28 @@
   background-color: var(--color-bg);
 }
 
+.containerUsers {
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 270px;
+  overflow-y: auto;
+}
+
 .containerUser {
   display: flex;
   align-items: center;
-  width: 90%;
-  height: 100px;
+  width: 100%;
+  height: 50px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .circle {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 15%;
+  width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 15px;
@@ -51,5 +60,5 @@
   justify-content: center;
   align-items: center;
   width: 75%;
-  font-size: var(--font-size-default);
+  font-size: 13px;
 }
