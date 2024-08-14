@@ -15,6 +15,7 @@ O projeto Social Sparck é um chat em tempo real com múltiplas instâncias, des
 - Socket.io Client
 
 ## Configuração do Ambiente
+OBS: A aplicação necessita do back - end rodando em paralelo para rodar. 
 1. Certifique-se de ter o Docker instalado.
 2. Clone o repositório do projeto.
 3. Navegue até a pasta raiz do projeto.
